@@ -54,30 +54,38 @@ namespace CreditCardValidation.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ID,CardNumber")] Card card)
         {
+
+            bool CardNumberExist = db.Cards.Any(c => c.CardNumber == card.CardNumber);
+            if (CardNumberExist)
+            {
+                ModelState.AddModelError("CardNumber", "Card Number already exists");
+            }
+
+            foreach (CardProvider cardProvider in db.CardProviders)
+            {
+                if (IsValidNumber(card.CardNumber, cardProvider))
+                {
+                    card.CardProvider = cardProvider;
+                    break;
+                }
+            }
+
+            if (card.CardProvider == null)
+            {
+                ModelState.AddModelError("CardNumber", "Card not registered to any card providers");
+            }
+
             if (ModelState.IsValid)
             {
-                foreach (CardProvider cardProvider in db.CardProviders)
-                {
-                    if (IsValidNumber(card.CardNumber, cardProvider))
-                    {
-                        card.CardProvider = cardProvider;
-                        break;
-                    }
-                }
+                card.CreatedDate = DateTime.Now;
+                card.Lastmodified = DateTime.Now;
 
-                if (card.CardProvider != null)
-                {
-                    card.CreatedDate = DateTime.Now;
-                    card.Lastmodified = DateTime.Now;
-
-                    db.Cards.Add(card);
-                    db.SaveChanges();
-                }
+                db.Cards.Add(card);
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CardProviderID = new SelectList(db.CardProviders, "ID", "Description", card.CardProviderID);
             return View(card);
         }
 

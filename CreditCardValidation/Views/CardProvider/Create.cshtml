@@ -28,7 +28,7 @@
             @Html.LabelFor(model => model.ValidationRegex, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <div class="checkbox">
-                    @Html.EditorFor(model => model.ValidationRegex)
+                    @Html.EditorFor(model => model.ValidationRegex, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.ValidationRegex, "", new { @class = "text-danger" })
                 </div>
             </div>
