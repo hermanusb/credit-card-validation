@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CreditCardValidation.Models.Card>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CardProvider.Description)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CardNumber)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.Processed)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lastmodified)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CardProvider.Description)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CardNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Processed)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CreatedDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Lastmodified)
+    </td>
+
+    <td>
+        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+    </td>
+</tr>
+}
+
+</table>

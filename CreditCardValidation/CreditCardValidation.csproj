@@ -126,6 +126,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CardController.cs" />
     <Compile Include="Controllers\CardProviderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="DAL\CreditCardContext.cs" />
@@ -178,6 +179,10 @@
     <Content Include="Views\CardProvider\Details.cshtml" />
     <Content Include="Views\CardProvider\Edit.cshtml" />
     <Content Include="Views\CardProvider\Index.cshtml" />
+    <Content Include="Views\Card\Create.cshtml" />
+    <Content Include="Views\Card\Delete.cshtml" />
+    <Content Include="Views\Card\Details.cshtml" />
+    <Content Include="Views\Card\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

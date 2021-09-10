@@ -1,4 +1,4 @@
-﻿@model CreditCardValidation.Models.CardProvider
+﻿@model CreditCardValidation.Models.Card
 
 @{
     ViewBag.Title = "Delete";
@@ -8,23 +8,30 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Card Providers</h4>
+    <h4>Card</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.CardProvider.Description)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Description)
+            @Html.DisplayFor(model => model.CardProvider.Description)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ValidationRegex)
+            @Html.DisplayNameFor(model => model.CardNumber)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ValidationRegex)
+            @Html.DisplayFor(model => model.CardNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Processed)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Processed)
         </dd>
 
         <dt>

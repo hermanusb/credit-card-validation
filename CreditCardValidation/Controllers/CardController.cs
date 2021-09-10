@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using CreditCardValidation.DAL;
@@ -11,113 +12,137 @@ using CreditCardValidation.Models;
 
 namespace CreditCardValidation.Controllers
 {
-    public class CardProviderController : Controller
+    public class CardController : Controller
     {
         private CreditCardContext db = new CreditCardContext();
 
-        // GET: CardProvider
+        // GET: Card
         public ActionResult Index()
         {
-            return View(db.CardProviders.ToList());
+            var cards = db.Cards.Include(c => c.CardProvider);
+            return View(cards.ToList());
         }
 
-        // GET: CardProvider/Details/5
+        // GET: Card/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CardProvider cardProvider = db.CardProviders.Find(id);
-            if (cardProvider == null)
+
+            Card card = db.Cards.Find(id);
+            if (card == null)
             {
                 return HttpNotFound();
             }
-            return View(cardProvider);
+
+            return View(card);
         }
 
-        // GET: CardProvider/Create
+        // GET: Card/Create
         public ActionResult Create()
         {
+            ViewBag.CardProviderID = new SelectList(db.CardProviders, "ID", "Description");
             return View();
         }
 
-        // POST: CardProvider/Create
+        // POST: Card/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Description,ValidationRegex")] CardProvider cardProvider)
+        public ActionResult Create([Bind(Include = "ID,CardNumber")] Card card)
         {
             if (ModelState.IsValid)
             {
-                cardProvider.CreatedDate = DateTime.Now;
-                cardProvider.Lastmodified = DateTime.Now;
+                foreach (CardProvider cardProvider in db.CardProviders)
+                {
+                    if (IsValidNumber(card.CardNumber, cardProvider))
+                    {
+                        card.CardProvider = cardProvider;
+                        break;
+                    }
+                }
 
-                db.CardProviders.Add(cardProvider);
-                db.SaveChanges();
+                if (card.CardProvider != null)
+                {
+                    card.CreatedDate = DateTime.Now;
+                    card.Lastmodified = DateTime.Now;
+
+                    db.Cards.Add(card);
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
 
-            return View(cardProvider);
+            ViewBag.CardProviderID = new SelectList(db.CardProviders, "ID", "Description", card.CardProviderID);
+            return View(card);
         }
 
-        // GET: CardProvider/Edit/5
+
+        private bool IsValidNumber(string cardNumber, CardProvider cardProvider)
+        {
+            Regex regex = new Regex(cardProvider.ValidationRegex);
+            return regex.IsMatch(cardNumber);
+        }
+
+        // GET: Card/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            CardProvider cardProvider = db.CardProviders.Find(id);
-            if (cardProvider == null)
+            Card card = db.Cards.Find(id);
+            if (card == null)
             {
                 return HttpNotFound();
             }
-
-            return View(cardProvider);
+            ViewBag.CardProviderID = new SelectList(db.CardProviders, "ID", "Description", card.CardProviderID);
+            return View(card);
         }
 
-        // POST: CardProvider/Edit/5
+        // POST: Card/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Description,ValidationRegex,CreatedDate")] CardProvider cardProvider)
+        public ActionResult Edit([Bind(Include = "ID,Processed,CardNumber,CreatedDate,Lastmodified,IsDeleted,CardProviderID")] Card card)
         {
             if (ModelState.IsValid)
             {
-                cardProvider.Lastmodified = DateTime.Now;
-                db.Entry(cardProvider).State = EntityState.Modified;
+                db.Entry(card).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cardProvider);
+            ViewBag.CardProviderID = new SelectList(db.CardProviders, "ID", "Description", card.CardProviderID);
+            return View(card);
         }
 
-        // GET: CardProvider/Delete/5
+        // GET: Card/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CardProvider cardProvider = db.CardProviders.Find(id);
-            if (cardProvider == null)
+            Card card = db.Cards.Find(id);
+            if (card == null)
             {
                 return HttpNotFound();
             }
-            return View(cardProvider);
+            return View(card);
         }
 
-        // POST: CardProvider/Delete/5
+        // POST: Card/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            CardProvider cardProvider = db.CardProviders.Find(id);
-            db.CardProviders.Remove(cardProvider);
+            Card card = db.Cards.Find(id);
+            db.Cards.Remove(card);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

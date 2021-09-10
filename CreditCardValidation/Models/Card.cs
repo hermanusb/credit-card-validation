@@ -12,10 +12,8 @@ namespace CreditCardValidation.Models
         public string CardNumber { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime Lastmodified { get; set; }
-        public bool IsDeleted { get; set; }
 
         public int CardProviderID { get; set; }
-
         public virtual CardProvider CardProvider { get; set; }
     }
 }
