@@ -18,7 +18,13 @@ namespace CreditCardValidation.Controllers
         // GET: CardProvider
         public ActionResult Index()
         {
-            return View(db.CardProviders.ToList());
+            //return View(db.CardProviders.ToList());
+            return View();
+        }
+
+        public ActionResult List()
+        {
+            return Json(db.CardProviders.ToList(), JsonRequestBehavior.AllowGet);
         }
 
         // GET: CardProvider/Details/5
