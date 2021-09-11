@@ -15,9 +15,12 @@ namespace CreditCardValidation.DAL
 
         public DbSet<CardProvider> CardProviders { get; set; }
 
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
+
     }
 }
