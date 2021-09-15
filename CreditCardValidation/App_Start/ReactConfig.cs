@@ -28,6 +28,12 @@ namespace CreditCardValidation
 
 			JsEngineSwitcher.Current.DefaultEngineName = V8JsEngine.EngineName;
 			JsEngineSwitcher.Current.EngineFactories.AddV8();
+
+			ReactSiteConfiguration.Configuration
+				.AddScript("~/Scripts/remarkable.js")
+				.AddScript("~/Scripts/CardProviderIndex.jsx")
+				.AddScript("~/Scripts/CardProviderEdit.jsx")
+				.AddScript("~/Scripts/CardProviderCreate.jsx");
 		}
 	}
 }

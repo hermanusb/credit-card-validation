@@ -1,57 +1,18 @@
-﻿@*
+﻿
+@model IEnumerable<CreditCardValidation.Models.CardProvider>
 
-    @model IEnumerable<CreditCardValidation.Models.CardProvider>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
 
-    @{
-        ViewBag.Title = "Index";
-    }
+@Html.React("CardProviderList", new
+{
+    initialData = Model,
+    url = Url.Action("List"),
+    //submitUrl = Url.Action("AddComment"),
+    pollInterval = 2000
+})
 
+<script src="@Url.Content("~/Scripts/CardProviderIndex.jsx")"></script>
+@Html.ReactInitJavaScript()
 
-    <h2>Card Providers</h2>
-
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lastmodified)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ValidationRegex)
-            </th>
-            <th></th>
-        </tr>
-
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lastmodified)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ValidationRegex)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-            </td>
-        </tr>
-    }
-
-    </table>*@
-
-<div id="content"></div>
-<script src="@Url.Content("~/Scripts/react/CardProviderIndex.jsx")"></script>
