@@ -1,51 +1,20 @@
-﻿@model IEnumerable<CreditCardValidation.Models.CardProvider>
-
-@{
-    ViewBag.Title = "Index";
-}
+﻿
+@model IEnumerable<CreditCardValidation.Models.CardProvider>
 
 <h2>Card Providers</h2>
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.CreatedDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Lastmodified)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ValidationRegex)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Lastmodified)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ValidationRegex)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+@Html.React("CardProviderList", new
+{
+    initialData = Model,
+    url = Url.Action("List"),
+    pollInterval = 2000
+})
 
-</table>
+<script src="@Url.Content("~/Scripts/CardProviderIndex.jsx")"></script>
+@Html.ReactInitJavaScript()
+

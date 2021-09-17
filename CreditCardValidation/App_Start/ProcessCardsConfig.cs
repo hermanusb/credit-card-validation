@@ -34,7 +34,7 @@ namespace CreditCardValidation.App_Start
             {
                 card.Processed = true;
                 card.Lastmodified = DateTime.Now;
-                //db.Entry(card).State = EntityState.Modified;
+                db.Entry(card).State = EntityState.Modified;
             }
 
             db.SaveChanges();         

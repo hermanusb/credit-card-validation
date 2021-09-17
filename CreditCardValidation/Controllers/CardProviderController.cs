@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI;
 using CreditCardValidation.DAL;
 using CreditCardValidation.Models;
 
@@ -18,7 +19,24 @@ namespace CreditCardValidation.Controllers
         // GET: CardProvider
         public ActionResult Index()
         {
+            //return View(db.CardProviders.ToList());
             return View(db.CardProviders.ToList());
+        }
+
+        public ActionResult List(int? id)
+        {
+            if (id == null)
+            {
+                return Json(db.CardProviders.ToList(), JsonRequestBehavior.AllowGet);
+            }
+
+            CardProvider cardProvider = db.CardProviders.Find(id);
+            if (cardProvider == null)
+            {
+                return HttpNotFound();
+            }
+
+            return Json(cardProvider, JsonRequestBehavior.AllowGet);
         }
 
         // GET: CardProvider/Details/5
@@ -47,7 +65,7 @@ namespace CreditCardValidation.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Description,ValidationRegex")] CardProvider cardProvider)
+        public ActionResult Create([Bind(Include = "Description,ValidationRegex")] CardProvider cardProvider)
         {
             if (ModelState.IsValid)
             {
@@ -56,7 +74,8 @@ namespace CreditCardValidation.Controllers
 
                 db.CardProviders.Add(cardProvider);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return Json(new { redirectToUrl = Url.Action("Index", "CardProvider") });
             }
 
             return View(cardProvider);
@@ -91,7 +110,9 @@ namespace CreditCardValidation.Controllers
                 cardProvider.Lastmodified = DateTime.Now;
                 db.Entry(cardProvider).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return Json(new { redirectToUrl = Url.Action("Index", "CardProvider") });
+                //return RedirectToAction("Index", "CardProvider");
             }
             return View(cardProvider);
         }
@@ -119,7 +140,9 @@ namespace CreditCardValidation.Controllers
             CardProvider cardProvider = db.CardProviders.Find(id);
             db.CardProviders.Remove(cardProvider);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Json(new { redirectToUrl = Url.Action("Index", "CardProvider") });
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
