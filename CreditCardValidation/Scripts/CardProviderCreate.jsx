@@ -78,7 +78,7 @@ class CardProviderCreateForm extends React.Component {
 
     render() {
         return (
-            <form action="" method="post" onSubmit={this.handleSubmit}>
+            <form method="post" onSubmit={this.handleSubmit}>
                 <div className="form-horizontal">
                     <div className="form-group">
                         <label className="control-label col-md-2">Description</label>
@@ -118,7 +118,7 @@ class CardProviderCreateForm extends React.Component {
 
                     <div className="form-group">
                         <div className="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" className="btn btn-default" />
+                            <input type="submit" value="Save" className="btn btn-success" />
                         </div>
                     </div>
                 </div>

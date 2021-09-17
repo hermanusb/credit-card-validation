@@ -33,7 +33,8 @@ namespace CreditCardValidation
 				.AddScript("~/Scripts/remarkable.js")
 				.AddScript("~/Scripts/CardProviderIndex.jsx")
 				.AddScript("~/Scripts/CardProviderEdit.jsx")
-				.AddScript("~/Scripts/CardProviderCreate.jsx");
+				.AddScript("~/Scripts/CardProviderCreate.jsx")
+				.AddScript("~/Scripts/CardProviderDelete.jsx");
 		}
 	}
 }

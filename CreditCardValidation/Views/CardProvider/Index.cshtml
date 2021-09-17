@@ -1,6 +1,9 @@
 ﻿
 @model IEnumerable<CreditCardValidation.Models.CardProvider>
 
+<h2>Card Providers</h2>
+
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -9,7 +12,6 @@
 {
     initialData = Model,
     url = Url.Action("List"),
-    //submitUrl = Url.Action("AddComment"),
     pollInterval = 2000
 })
 

@@ -18,7 +18,7 @@ namespace CreditCardValidation
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //ProcessCardsConfig.ScheduleProcessCards();
+            ProcessCardsConfig.ScheduleProcessCards();
         }     
     }
 }

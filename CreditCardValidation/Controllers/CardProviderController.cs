@@ -140,7 +140,9 @@ namespace CreditCardValidation.Controllers
             CardProvider cardProvider = db.CardProviders.Find(id);
             db.CardProviders.Remove(cardProvider);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return Json(new { redirectToUrl = Url.Action("Index", "CardProvider") });
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

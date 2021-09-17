@@ -9,9 +9,9 @@
             <table className="table">
                 <tr>
                     <th>Description</th>
-                    <th>CreatedDate</th>
-                    <th>Lastmodified</th>
-                    <th>ValidationRegex</th>
+                    <th>Created Date</th>
+                    <th>Last modified</th>
+                    <th>Validation Regex</th>
                     <th></th>
                 </tr>
 

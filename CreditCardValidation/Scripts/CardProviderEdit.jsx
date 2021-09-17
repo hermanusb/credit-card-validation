@@ -133,7 +133,7 @@ class CardProviderEditForm extends React.Component {
 
                     <div className="form-group">
                         <div className="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Save" className="btn btn-default" />
+                            <input type="submit" value="Save" className="btn btn-success" />
                         </div>
                     </div>
                 </div>
